@@ -16,8 +16,8 @@ return [
     'factors' => [
         'ip_address',
         'platform',
-        'device',
-        'browser',
+        // 'device',
+        // 'browser',
         // 'language',
     ],
 
