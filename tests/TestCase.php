@@ -32,17 +32,22 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-
-        $migration = include __DIR__ . '/../database/migrations/create_visits_table.php.stub';
-        $migration->up();
     }
 
     protected function setUpDatabase($app)
     {
         $schema = $app['db']->connection()->getSchemaBuilder();
 
+        $schema->create('visits', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('visitable');
+            $table->string('sha1');
+            $table->integer('weight')->default(1);
+            $table->timestamps();
+        });
+
         $schema->create('pages', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title');
         });
 
